@@ -1,0 +1,72 @@
+#intro {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 80vh;
+}
+
+#intro .intro-container {
+	width: 70vw;
+	margin-left: auto;
+	padding-right: 10%;
+}
+
+#intro .intro-container h1 {
+	font-size: 88px;
+	font-weight: 500;
+	font-style: italic;
+	margin-bottom: 3rem;
+	opacity: 0;
+}
+
+#intro .intro-container p {
+	line-height: 7rem;
+	font-size: 50px;
+	letter-spacing: -1.5%;
+	font-weight: 500;
+	font-style: italic;
+	margin-bottom: 3rem;
+	opacity: 0;
+}
+
+#drama {
+	display: flex;
+	flex-direction: column-reverse;
+	width: 100%;
+	background-color: #141516;
+}
+
+.the_sun {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	top: 50%;
+	left: 0;
+	transform: translate(0%, -30%);
+	position: fixed;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.personalised {
+	opacity: 0;
+}
+
+.introduce {
+	display: flex;
+	flex-direction: column;
+	transform: translateY(20%);
+}
+
+.introducing {
+	line-height: 96.2px;
+	font-style: italic;
+	font-size: 130px;
+	color: #fff;
+	padding-left: 5rem;
+	opacity: 0;
+}

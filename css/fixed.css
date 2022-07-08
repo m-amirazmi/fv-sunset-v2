@@ -1,0 +1,67 @@
+/* FIXED */
+.fixed {
+	position: fixed;
+}
+
+.fixed_logo {
+	top: 2rem;
+	left: 2rem;
+}
+
+.logo,
+.logo-white,
+.menu,
+.menu-white,
+.icons,
+.icons-white,
+.footer-text,
+.footer-text-white {
+	position: absolute;
+}
+
+.menu,
+.menu-white {
+	right: -10px;
+}
+
+.icons,
+.icons-white {
+	bottom: 0px;
+}
+
+.footer-text,
+.footer-text-white {
+	bottom: 0px;
+}
+
+.logo-white,
+.menu-white,
+.icons-white,
+.footer-text-white {
+	opacity: 0;
+}
+
+.footer-text-white {
+	color: white;
+}
+
+.fixed_menu {
+	top: 1rem;
+	right: 1rem;
+}
+
+.fixed_footer-left {
+	bottom: 2rem;
+	left: 2rem;
+}
+
+.fixed_footer-left p {
+	bottom: 2rem;
+	left: 2rem;
+	margin: 0.5rem;
+}
+
+.fixed_footer-icons {
+	bottom: 2rem;
+	right: 2.5rem;
+}

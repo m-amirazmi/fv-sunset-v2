@@ -1,0 +1,270 @@
+<html>
+    <head>
+        <title>Fashionvalet</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+            
+            body { font-family: 'Montserrat', sans-serif; }
+            .font { font-family: 'Cormorant Infant', serif; font-style: italic }
+            
+            .logo img:first-child {display: none;}
+            .logo.white img:first-child {display: block;}
+            .logo.white img:last-child {display: none;}
+
+            .the_sun {width: 100%; display: flex; justify-content: center; align-items: baseline;top:12%;left:0; position: fixed; height: 100vh; overflow: hidden;}
+            
+            .intro > div {opacity: 0; padding-bottom: 80px;}
+            .intro {height: 100vh; display: flex; justify-content: center; align-items: flex-start; flex-direction: column; font-size: 3em; line-height: 2em; text-align: left; right: 0; width: 60%; padding-top: 100vh; float: right; padding-right: 10%;}
+
+            footer {position: fixed; z-index: 1; bottom: 0; padding: 30px; color: #fff; transition:  color ease-in 0.25s; font-size: 0.9rem; line-height: 1.2rem;} footer.white {color: #333;}
+        </style>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+        
+        <script>
+            window.onload = () => {
+
+                const height = window.innerHeight
+                const width = window.innerWidth
+
+                // Init
+                let controller = new ScrollMagic.Controller()
+
+                // Sun Motion
+                let sun_elem = {
+                    targets: '.the_sun',
+                    translateX : [0, -width/2, -width/2, -width/2, 0],
+                    offset:width * 500,
+                    easing: 'easeInOutSine'
+                }
+
+                let sun_scene = anime.timeline({autoplay: false})
+                sun_scene.add(sun_elem)
+
+                let the_sunset = new ScrollMagic.Scene({
+                    triggerElement: "#fvsunset",
+                    duration: height*2.5,
+                })
+                .addIndicators({
+                    colorTrigger: "black",
+                    colorStart: "black",
+                    colorEnd: "black",
+                    indent: 0
+                })
+                .on("progress", function (event) {
+                    sun_scene.seek(sun_scene.duration * event.progress)
+                })
+                .setClassToggle(".logo, footer", "white")
+                .addTo(controller)
+
+                // Intro
+                let intro_1 = {
+                    targets: '#fvsunset .intro_1',
+                    opacity: 1,
+                    duration: height/2
+                }
+                let intro_2 = {
+                    targets: '#fvsunset .intro_2',
+                    opacity: 1,
+                    duration: height*2
+                }
+                let intro_3 = {
+                    targets: '#fvsunset .intro_3',
+                    opacity: 1,
+                    duration: height*6
+                }
+
+                let intro_scene = anime.timeline({autoplay: false})
+                intro_scene.add(intro_1).add(intro_2).add(intro_3)
+
+                let the_intro = new ScrollMagic.Scene({
+                    triggerElement: ".intro_1",
+                    duration: height,
+                })
+                .addIndicators({
+                    colorTrigger: "red",
+                    colorStart: "red",
+                    colorEnd: "red",
+                    indent: 50
+                })
+                .on("progress", function (event) {
+                    intro_scene.seek(intro_scene.duration * event.progress)
+                })
+                .addTo(controller)
+
+                // Sun Set
+                let half_sun = {
+                    targets: '.the_sun',
+                    height: 350,
+                    duration: height/2,
+                    translateY: [0, '30%'],
+                    easing: 'easeInOutSine',
+                }
+
+                let personalised = {
+                    targets: '.personalised',
+                    opacity: [0, 1],
+                    translateY: [0, '-125%'],
+                    duration: height/2,
+                    easing: 'linear',
+                }
+
+                let sun_scene2 = anime.timeline({autoplay: false})
+                sun_scene2.add(half_sun).add(personalised)
+
+                let the_sunset2 = new ScrollMagic.Scene({
+                    triggerElement: "#sunset_layer",
+                    duration: height,
+                    triggerHook: 0
+                })
+                .addIndicators({
+                    colorTrigger: "white",
+                    colorStart: "white",
+                    colorEnd: "white",
+                    indent: 50
+                })
+                .on('start', function(e){
+                    document.querySelector('.the_sun').style.position = 'relative';
+                })
+                .on('progress', function(event){
+                    sun_scene2.seek(sun_scene2.duration * event.progress)
+                })
+                .on('leave', function(e){
+                    if(e.state == 'AFTER') document.querySelector('.the_sun').style.position = 'relative';
+                    else document.querySelector('.the_sun').style.position = 'fixed';
+                })
+                .setPin('#sunset_layer')
+                .addTo(controller)
+
+                // Chapter
+                let chapter_elem1 = {
+                    targets: '#chapter .font',
+                    opacity: [0,1],
+                    duration: height,
+                    easing: 'easeInOutSine',
+                }
+                let chapter_elem2 = {
+                    targets: '#chapter .font',
+                    opacity: [1,0],
+                    duration: height,
+                    easing: 'easeInOutSine',
+                }
+
+                let chapter_scene = anime.timeline({autoplay: false})
+                chapter_scene.add(chapter_elem1).add(chapter_elem2)
+
+                let the_chapter = new ScrollMagic.Scene({
+                    triggerElement: "#chapter",
+                    duration: height
+                })
+                .addIndicators({
+                    colorTrigger: "yellow",
+                    colorStart: "yellow",
+                    colorEnd: "yellow",
+                    indent: 50
+                })
+                .on("progress", function (event) {
+                    chapter_scene.seek(chapter_scene.duration * event.progress)
+                })
+                .addTo(controller)
+
+
+                // CTA
+                let last_elem = {
+                    targets: '#last .left',
+                    width: ['100%', '50%'],
+                    translateY: ['-100%',0],
+                    duration: height,
+                    easing: 'linear',
+                }
+
+                let the_cta = anime.timeline({autoplay: false})
+                the_cta.add(last_elem)
+
+                let last = new ScrollMagic.Scene({
+                    triggerElement: "#last",
+                    duration: height,
+                    triggerHook: 1
+                })
+                .addIndicators({
+                    colorTrigger: "green",
+                    colorStart: "green",
+                    colorEnd: "green",
+                    indent: 50
+                })
+                .on("progress", function (event) {
+                    the_cta.seek(the_cta.duration * event.progress)
+                })
+                .addTo(controller)
+
+            }
+        </script>
+    </head>
+    <body>
+
+    <header style="position: fixed; z-index: 1; padding: 30px">
+        <div class="logo">
+            <img class="logo" src="./images/logo.webp" width="164px" height="19px" alt="FV Logo" />
+            <img class="logo-white" src="./images/logo-white.webp" width="164px" height="19px" alt="FV Logo" />
+        </div>
+    </header>
+
+    <footer>
+        FASHIONVALET.COM<br />
+        2010 - 2022
+    </footer>
+
+    <main role="main">
+
+        <section id="fvsunset">
+
+            <!-- INTRO -->
+            <div class="intro font">
+                <div class="intro_1" style="font-size: 2em; letter-spacing: -0.1rem;">Dear FV Fam,</div>
+                <div class="intro_2">As they say, all good things must come to an end... and be replaced with something better.</div>
+                <div class="intro_3">With that, we are thrilled to share with you - a brand new shopping experience.</div>
+            </div>
+
+            <div id="drama" style="display: flex; flex-direction: column-reverse; width: 100%; background: #141516; ">
+
+                <!-- CTA -->
+                <div style="height:100vh; display: flex;" id="last">
+                    <div class="left" style="height: 100vh; background: url(images/background.webp) center bottom / cover no-repeat" ></div>
+                    <!-- <div style="width: 60%">
+                        <img src="images/duck.gif" style="width: 100%;height: auto" />
+                        <img src="images/duck.gif" style="width: 100%;height: auto" />
+                    </div> -->
+                </div>
+
+                <!-- CHAPTER -->
+                <div id="chapter" style="margin-top: 0; padding-top: 170; background-image: url(images/bg3.webp);background-repeat: no-repeat;height: 100vh;background-position: top center;background-size: cover; display: flex; align-items: center; justify-content: flex-start; height: 100vh">
+                    <div class="font" style="padding-top:5vh; padding-left: 10%;color: white; font-size: 10em;line-height: .5em; letter-spacing: -5 ">Now, <br />to the next<br /> chapter</div>
+                </div>
+                
+                <!-- SUNSET -->
+                <div id="sunset_layer" style="background-image: url(images/bg2.webp);background-repeat: no-repeat;height: 100vh;background-position: top center;background-size: cover; position: relative;">
+
+                    <div class="the_sun">
+                        <div style="background-image: url(images/sunset_circle.webp);background-repeat: no-repeat;background-position: top center;background-size: cover; width: 600; height: 600">
+                        </div>
+                    </div>
+                
+                    <div style="text-align: center; color: white; font-size: 3em; position: absolute; text-align: center; bottom: 0; width: 100%;" class="font personalised">
+                    where you will be inspired and get rewarded <br />- all personalised, just for you.
+                    </div>
+
+                </div>
+
+                <!-- GRADIENT -->
+                <div style="background: rgb(255,255,255);
+                background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(222,210,151,1) 50%, rgba(219,203,139,1) 75%, rgba(207,163,111,1) 100%); height: 500px"></div>
+            </div>
+
+        </section>
+        
+    </body>
+</html>

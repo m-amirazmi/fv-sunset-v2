@@ -1,0 +1,220 @@
+<html>
+    <head>
+        <title>Fashionvalet</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+            
+            body { font-family: 'Montserrat', sans-serif; }
+            .font { font-family: 'Cormorant Infant', serif; font-style: italic }
+            
+            .logo img:first-child {display: none;}
+            .logo.white img:first-child {display: block;}
+            .logo.white img:last-child {display: none;}
+            
+            .the_sun {display: flex; justify-content: center; padding-top: 8rem; height: 350; overflow: hidden;}
+            .the_set {background-image: url(images/sunset_circle.webp);background-repeat: no-repeat;background-position: top center;background-size: cover; width: 600; height: 600}
+            .the_sun.fixed {position: fixed; top: 0; left: 0; height: 600; width: 100%;}
+            .personalised {color: white; font-size: 3em; text-align: center; }
+            
+            #sunset_layer { height: 150vh}
+            .the_background {background: url(images/background.webp) center top / contain no-repeat; background-size: 100%; background-color: #141516;}
+            
+            .intro {min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; flex-direction: column; font-size: 3em; line-height: 2em; padding-left: 30%; padding-right: 5%; padding-bottom: 50vh;}
+            .intro_1 {padding-top: 100vh; }
+            .intro_1, .intro_2, .intro_3 {opacity: 0;}
+
+            footer {position: fixed; z-index: 1; bottom: 0; padding: 30px; color: #fff; transition:  color ease-in 0.25s; font-size: 0.9rem; line-height: 1.2rem;} footer.white {color: #333;}
+            
+            .gradient {background: rgb(255,255,255);background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(225,216,159,1) 100%); height: 100px}
+
+            #chapter {min-height: 100vh;overscroll-behavior: none; display: flex; flex-wrap: nowrap; overflow-x: scroll;
+  scroll-snap-type: x mandatory; flex-direction: column;}
+            .brand {height: 100vh; color: #fff; width: 100%; display: flex; align-items: center;}
+            .brand .font {font-size: 8em;line-height: .75em; letter-spacing: -5}
+            .brand.details { background: red}
+            .bb {border: 1px solid red}
+        </style>
+
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+        
+        <script>
+            window.onload = () => {
+                gsap.registerPlugin(ScrollTrigger)
+                animate()
+            }
+            const animate = () => {
+
+                let sections = gsap.utils.toArray(".brand")
+
+                gsap.to(sections, {
+                yPercent: -100 * (sections.length - 1),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#chapter",
+                    pin: true,
+                    scrub: 1,
+                    // markers: {startColor: "black", endColor: "black", indent: 100},
+                    snap: 1 / (sections.length - 1),
+                    end: "+=3500",
+                }
+                })
+
+                gsap.to('.intro_1', {
+                    opacity: 1,
+                    scrollTrigger: {
+                        trigger: '.intro_1',
+                        start: 'center 60%',
+                        scrub: 1,
+                        // markers: {startColor: "red", endColor: "red"}
+                    }
+                })
+
+                gsap.to('.intro_2', {
+                    opacity: 1,
+                    scrollTrigger: {
+                        trigger: '.intro_2',
+                        start: 'center 80%',
+                        scrub: 1,
+                        // markers: {startColor: "red", endColor: "red"}
+                    }
+                })
+
+                gsap.to('.intro_3', {
+                    opacity: 1,
+                    scrollTrigger: {
+                        trigger: '.intro_3',
+                        start: 'center 80%',
+                        scrub: 1,
+                        // markers: {startColor: "red", endColor: "red"}
+                    }
+                })
+
+                gsap.fromTo('.the_sun', {x : '-50%'},{
+                    x: '0',
+                    duration: 3,
+                    scrollTrigger: {
+                        trigger: '.intro',
+                        start: 'bottom center',
+                        endTrigger : '.sunplaceholder',
+                        end: 'top center',
+                        scrub: 1,
+                        // markers: {startColor: "pink", endColor: "pink", indent: 100}
+                    }
+                })
+
+                gsap.fromTo('.the_sun', {x : 0},{
+                    x: '-50%',
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: '.intro_1',
+                        start: 'center center',
+                        end: 'bottom center',
+                        scrub: 1,
+                        // markers: {startColor: "pink", endColor: "pink", indent: 100}
+                    }
+                })
+
+                gsap.to('.the_sun', {
+                    height: 300,
+                    scrollTrigger: {
+                        trigger: '.sunplaceholder',
+                        start: 'top center',
+                        scrub: 1,
+                        // markers: {startColor: "blue", endColor: "blue"}
+                    }
+                })
+
+                gsap.to('.the_sun', {
+                    scrollTrigger: {
+                        trigger: '.sunplaceholder',
+                        start: 'center 40%',
+                        // markers: {startColor: "cyan", endColor: "cyan", indent: 500},
+                        onEnter: () => {
+                            const sun = document.querySelector('.the_sun')
+                            sun.style.position = 'relative'
+                        },
+                        onLeaveBack: () => {
+                            const sun = document.querySelector('.the_sun')
+                            sun.style.position = 'fixed'
+                        },
+                    }
+                })
+
+            }
+        </script>
+    </head>
+    <body>
+
+    <header style="position: fixed; z-index: 1; padding: 30px">
+        <div class="logo">
+            <img class="logo" src="./images/logo.webp" width="164px" height="19px" alt="FV Logo" />
+            <img class="logo-white" src="./images/logo-white.webp" width="164px" height="19px" alt="FV Logo" />
+        </div>
+    </header>
+
+    <footer>
+        FASHIONVALET.COM<br />
+        2010 - 2022
+    </footer>
+
+    <main role="main">
+
+        <section id="fvsunset">
+
+            <!-- INTRO -->
+            <div class="intro font">
+                <div class="intro_1" style="font-size: 2em; letter-spacing: -0.1rem;">Dear FV Fam,</div>
+                <div class="intro_2">As they say, all good things must come to an end... and be replaced with something better.</div>
+                <div class="intro_3">With that, we are thrilled to share with you - a brand new shopping experience.</div>
+            </div>
+
+            <div id="drama">
+
+                <!-- GRADIENT -->
+                <div class="gradient"></div>
+
+                <div class="the_background">
+
+                    <!-- SUNSET -->
+                    <div id="sunset_layer">
+
+                        <div style="height: 50vh"></div>
+
+
+                        <div class="sunplaceholder" style="height: 600">
+                            <div class="the_sun fixed"><div class="the_set"></div></div>
+                        </div>
+                    
+                        <div class="font personalised">where you will be inspired and get rewarded <br />- all personalised, just for you.</div>
+
+                    </div>
+
+                    <!-- CHAPTER -->
+                    <div id="chapter">
+                        <div class="brand">
+                            <div class="font">Introducing, <br />Your personalised<br /> shopping experience</div>
+                        </div>
+                        <!-- dUCk -->
+                        <div class="brand details">
+                            duck
+                        </div>
+
+                        <!-- lilit -->
+                        <div class="brand details">
+                            lilit
+                        </div>
+                    </div>
+
+                    <div style="color: white; display: flex; align-items: center;justify-content: center; height: 100vh">LAST</div>
+
+                </div>
+                
+            </div>
+
+        </section>
+        
+    </body>
+</html>
